@@ -1,14 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import { Alert, Modal, StyleSheet, Pressable, Text, TextInput, View } from "react-native";
 
-const ModalInsert = ({status}) => {
+const ModalInsert = ({openModal, closeModal, valorInicial}) => {
+
+  const [inputValue, setInputValue] = useState({'id': valorInicial.id, 'titulo': valorInicial.titulo, 'descricao':valorInicial.descricao, 'qtdDias': valorInicial.qtdDias, 'data':valorInicial.data});
+
+
+  // let inputValue = {'titulo': '', 'descricao':'', 'qtdDias': '', 'data':'data'}
   
   return (
     <View style={styles.centeredView}>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
-        visible={status}
+        visible={openModal}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
         }}
@@ -17,27 +22,24 @@ const ModalInsert = ({status}) => {
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Novo Evento</Text>
             <TextInput placeholder={'Título'}
-              onSubmitEditing={
-                ({nativeEvent})=> definirListaCompras(listaCompras.concat(nativeEvent.text))
-              }
+              value={inputValue.titulo}
+              onChangeText={text => setInputValue.titulo('titulo', text)}
               />
             <TextInput placeholder={'Descrição'}
-              onSubmitEditing={
-                ({nativeEvent})=> definirListaCompras(listaCompras.concat(nativeEvent.text))
-              }
+              value={inputValue.Descricao}
+              onChangeText={text => setInputValue.descricao('Descricao', text)}
               />
             <TextInput placeholder={'Quantidade de dias'}
-              onSubmitEditing={
-                ({nativeEvent})=> definirListaCompras(listaCompras.concat(nativeEvent.text))
-              }
+              value={inputValue.qtdDias}
+              onChangeText={text => setInputValue.qtdDias('qtdDias', text)}
               />
             <TextInput placeholder={'Data'}
-              onSubmitEditing={
-                ({nativeEvent})=> definirListaCompras(listaCompras.concat(nativeEvent.text))
-              }
+              value={inputValue.data}
+              onChangeText={text => setInputValue.data('data', text)}
               />
               <Pressable
-                style={[styles.button, styles.buttonOpen]}
+                style={[styles.button, styles.buttonClose]}
+                onPress={closeModal}
               >
                 <Text style={styles.textStyle}>Cancelar</Text>
               </Pressable>
