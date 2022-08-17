@@ -1,25 +1,28 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import ModalInsert from "../Modal";
+import moment from "moment";
 
 export default function List() {
   const [modalVisible, setModalVisible] = useState(false);
   let valorInicial = [
     {
       id: 1,
-      titulo: "Arroz",
-      descricao: "Produto",
-      data: "07/12/2022",
+      titulo: "Natal",
+      descricao: "Natal em família",
+      data: "25/12/2022",
       qtdDias: "1",
     },
     {
       id: 2,
-      titulo: "Feijão",
-      descricao: "Produto",
-      data: "07/12/2022",
+      titulo: "Ano novo",
+      descricao: "Ano novo com amigos",
+      data: "31/12/2022",
       qtdDias: "1",
     },
   ];
+
+  
 
   let [listaEventos, setListaEventos] = useState(valorInicial);
 
@@ -31,7 +34,6 @@ export default function List() {
     setListaEventos(listaEventos.concat(data));
     closeModal();
   };
-
   let list = "";
   const deleteEvent = (idProp) => {
     var pos = listaEventos.indexOf(idProp);
@@ -40,6 +42,13 @@ export default function List() {
     setListaEventos(list);
   };
   console.log("lista", listaEventos);
+
+  const calcDias = (data) =>{
+    let list = new Date()
+    var diff = moment(data,"DD/MM/YYYY HH:mm:ss").diff(moment(list,"DD/MM/YYYY HH:mm:ss"));
+    var dias = moment.duration(diff).asDays()
+    return Math.floor(dias)
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Seus Eventos</Text>
@@ -64,13 +73,13 @@ export default function List() {
               </View>
               <View style={styles.containerLineContent}>
                 <Text style={styles.containerLineLabel}>Data do evento:</Text>
-                <Text>{item.data}</Text>
+                <Text>{item.data.toString()}</Text>
               </View>
               <View style={styles.containerLineContent}>
                 <Text style={styles.containerLineLabel}>
                   Quantidade de dias até o evento:
                 </Text>
-                <Text>{item.qtdDias}</Text>
+                <Text>{calcDias(item.data.toString())}</Text>
               </View>
               <View style={styles.containerLineContent}>
                 <Pressable

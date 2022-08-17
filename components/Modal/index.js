@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   StyleSheet,
@@ -7,15 +7,16 @@ import {
   TextInput,
   View,
 } from "react-native";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
-  
+
   const [inputValue, setInputValue] = useState({
     id: listaEventos + 1,
     titulo: "",
     descricao: "",
     qtdDias: "",
-    data: "",
+    data: new Date(),
   });
 
   return (
@@ -45,22 +46,18 @@ const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
               }
               style={styles.inputStyle}
             />
-            <TextInput
-              placeholder={"Quantidade de dias"}
-              name="qtdDias"
-              onChangeText={(text) =>
-                setInputValue({ ...inputValue, qtdDias: text })
-              }
-              style={styles.inputStyle}
+            <DatePicker
+              style={[styles.datePickerStyle, styles.inputStyle]}
+              date={inputValue.data} //initial date from state
+              mode="date" //The enum of date, datetime and time
+              placeholder="Escolha as data"
+              format="DD-MM-YYYY"
+              minDate="01-01-1900"
+              maxDate="01-12-3000"
+              selected={inputValue.data}
+              onChange={(date) =>{setInputValue({ ...inputValue, data: date.toLocaleDateString() })}}
             />
-            <TextInput
-              placeholder={"Data"}
-              name="data"
-              onChangeText={(text) =>
-                setInputValue({ ...inputValue, data: text })
-              }
-              style={styles.inputStyle}
-            />
+           
             <View style={styles.buttons}>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -89,6 +86,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22,
   },
+
   modalView: {
     margin: 20,
     backgroundColor: "#FFFFF0",
@@ -110,6 +108,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     borderBottomWidth: 1,
     borderColor: "#C0C0C0",
+  },
+  datePickerStyle: {
+    padding: 10,
+    width: '30px',
+    margin: 30,
+    fontSize: 14,
+    display: 'flex',
+    alignContent: 'center'
   },
   buttons: {
     display: "flex",
