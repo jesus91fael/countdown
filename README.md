@@ -1,1 +1,2 @@
 # countdown
+### Um aplicativo de contagem regressiva em dias para determinada atividade. O usuário poderá criar um evento e colocar a data assim quantidade de dias até o evento ocorrer será contabilizada. Caso já tenha acontecido aparecerá a mensagem "Realizado!". O cadastro do evento e por meio de um modal.
