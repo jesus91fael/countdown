@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react"
 import {
   Modal,
   StyleSheet,
@@ -6,19 +6,18 @@ import {
   Text,
   TextInput,
   View,
-} from "react-native";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+} from "react-native"
+import DatePicker from "react-datepicker"
+import 'react-datepicker/dist/react-datepicker.css'
 
-const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
-  const ids = 'id'+(listaEventos+1)
+const ModalInsert = ({ openModal, closeModal, saveData, eventList }) => {
+  const ids = "id" + (eventList + 1)
   const [inputValue, setInputValue] = useState({
     id: ids,
-    titulo: "",
-    descricao: "",
-    qtdDias: "",
+    title: "",
+    description: "",
     data: Date.now(),
-  });
+  })
 
   return (
     <View style={styles.centeredView}>
@@ -33,35 +32,36 @@ const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
             <Text style={styles.modalText}>Novo Evento</Text>
             <TextInput
               placeholder={"Título"}
-              name="titulo"
+              name="title"
               onChangeText={(text) =>
-                setInputValue({ ...inputValue, titulo: text })
+                setInputValue({ ...inputValue, title: text })
               }
               style={styles.inputStyle}
             />
             <TextInput
               placeholder={"Descrição"}
-              name="descricao"
+              name="description"
               onChangeText={(text) =>
-                setInputValue({ ...inputValue, descricao: text })
+                setInputValue({ ...inputValue, description: text })
               }
               style={styles.inputStyle}
             />
-          <View style={styles.datePickerStyle}>
-
-            <DatePicker
-              style={[styles.datePickerStyle, styles.inputStyle]}
-              date={inputValue.data} //initial date from state
-              mode="date" //The enum of date, datetime and time
-              placeholder="Escolha as data"
-              format="DD-MM-YYYY"
-              minimumDate= {new Date("01-01-1900")}
-              maximumDate= {new Date("01-01-3000")}
-              selected={inputValue.data}
-              // onDateChange={(date = date.toLocaleDateString()) =>{setInputValue({ ...inputValue, data: date.toDateString()  })}}
-              onChange={(date) =>{setInputValue({ ...inputValue, data: date })}}
-            />
-           </View>
+            <View style={styles.datePickerStyle}>
+              <DatePicker
+                style={[styles.datePickerStyle, styles.inputStyle]}
+                date={inputValue.data}
+                name="data"
+                mode="date"
+                placeholder="Escolha as data"
+                format="DD-MM-YYYY"
+                minimumDate={new Date("01-01-1900")}
+                maximumDate={new Date("01-01-3000")}
+                selected={inputValue.data}
+                onChange={(date) => {
+                  setInputValue({ ...inputValue, data: date })
+                }}
+              />
+            </View>
             <View style={styles.buttons}>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -80,8 +80,8 @@ const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
         </View>
       </Modal>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   centeredView: {
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22,
   },
-
   modalView: {
     margin: 20,
     backgroundColor: "#FFFFF0",
@@ -106,6 +105,13 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  modalText: {
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 25,
+    color: "#B22222",
+    margin: 10,
+  },
   inputStyle: {
     padding: 10,
     margin: 5,
@@ -118,8 +124,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
     margin: 5,
     fontSize: 14,
-    display: 'flex',
-    alignContent: 'center'
+    display: "flex",
+    alignContent: "center",
   },
   buttons: {
     display: "flex",
@@ -146,13 +152,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  modalText: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 25,
-    color: "#B22222",
-    margin: 10,
-  },
-});
+})
 
-export default ModalInsert;
+export default ModalInsert
