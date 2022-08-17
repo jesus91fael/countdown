@@ -7,18 +7,16 @@ export default function List() {
   const [modalVisible, setModalVisible] = useState(false);
   let valorInicial = [
     {
-      id: 1,
+      id: 'id1',
       titulo: "Natal",
       descricao: "Natal em família",
-      data: "25/12/2022",
-      qtdDias: "1",
+      data: "Wed Dec 25 2022 13:57:22 GMT-0300 (GMT-03:00)",
     },
     {
-      id: 2,
+      id: 'id2',
       titulo: "Ano novo",
       descricao: "Ano novo com amigos",
-      data: "31/12/2022",
-      qtdDias: "1",
+      data: "Wed Dec 31 2022 13:57:22 GMT-0300 (GMT-03:00)",
     },
   ];
 
@@ -34,21 +32,22 @@ export default function List() {
     setListaEventos(listaEventos.concat(data));
     closeModal();
   };
-  let list = "";
+  
+  let list = listaEventos;
+  let pos = 0
   const deleteEvent = (idProp) => {
-    var pos = listaEventos.indexOf(idProp);
-    //revisar
-    list = listaEventos.splice( pos - 1, 1 );
-    setListaEventos(list);
+    pos = listaEventos.findIndex((item) => idProp === item.id);
+    list.splice(pos , 1) 
+    setListaEventos(list);    
   };
-  console.log("lista", listaEventos);
 
   const calcDias = (data) =>{
     let list = new Date()
     var diff = moment(data,"DD/MM/YYYY HH:mm:ss").diff(moment(list,"DD/MM/YYYY HH:mm:ss"));
-    var dias = moment.duration(diff).asDays()
-    return Math.floor(dias)
+    var dias = moment.duration(diff).asDays() + 1
+    return dias < 0 ? 'Realizado!' : Math.floor(dias)
   }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Seus Eventos</Text>
@@ -73,13 +72,13 @@ export default function List() {
               </View>
               <View style={styles.containerLineContent}>
                 <Text style={styles.containerLineLabel}>Data do evento:</Text>
-                <Text>{item.data.toString()}</Text>
+                <Text>{new Date(item.data).toLocaleDateString()}</Text>
               </View>
               <View style={styles.containerLineContent}>
                 <Text style={styles.containerLineLabel}>
                   Quantidade de dias até o evento:
                 </Text>
-                <Text>{calcDias(item.data.toString())}</Text>
+                <Text>{calcDias(new Date(item.data).toLocaleDateString())}</Text>
               </View>
               <View style={styles.containerLineContent}>
                 <Pressable

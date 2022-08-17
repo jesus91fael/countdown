@@ -9,14 +9,15 @@ import {
 } from "react-native";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
 
+const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
+  const ids = 'id'+(listaEventos+1)
   const [inputValue, setInputValue] = useState({
-    id: listaEventos + 1,
+    id: ids,
     titulo: "",
     descricao: "",
     qtdDias: "",
-    data: new Date(),
+    data: Date.now(),
   });
 
   return (
@@ -46,18 +47,21 @@ const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
               }
               style={styles.inputStyle}
             />
+          <View style={styles.datePickerStyle}>
+
             <DatePicker
               style={[styles.datePickerStyle, styles.inputStyle]}
               date={inputValue.data} //initial date from state
               mode="date" //The enum of date, datetime and time
               placeholder="Escolha as data"
               format="DD-MM-YYYY"
-              minDate="01-01-1900"
-              maxDate="01-12-3000"
+              minimumDate= {new Date("01-01-1900")}
+              maximumDate= {new Date("01-01-3000")}
               selected={inputValue.data}
-              onChange={(date) =>{setInputValue({ ...inputValue, data: date.toLocaleDateString() })}}
+              // onDateChange={(date = date.toLocaleDateString()) =>{setInputValue({ ...inputValue, data: date.toDateString()  })}}
+              onChange={(date) =>{setInputValue({ ...inputValue, data: date })}}
             />
-           
+           </View>
             <View style={styles.buttons}>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
@@ -111,8 +115,8 @@ const styles = StyleSheet.create({
   },
   datePickerStyle: {
     padding: 10,
-    width: '30px',
-    margin: 30,
+    zIndex: 1,
+    margin: 5,
     fontSize: 14,
     display: 'flex',
     alignContent: 'center'
