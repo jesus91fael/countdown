@@ -8,9 +8,10 @@ import {
   View,
 } from "react-native";
 
-const ModalInsert = ({ openModal, closeModal, saveData }) => {
+const ModalInsert = ({ openModal, closeModal, saveData, listaEventos }) => {
+  
   const [inputValue, setInputValue] = useState({
-    id: "",
+    id: listaEventos + 1,
     titulo: "",
     descricao: "",
     qtdDias: "",
@@ -43,7 +44,6 @@ const ModalInsert = ({ openModal, closeModal, saveData }) => {
                 setInputValue({ ...inputValue, descricao: text })
               }
               style={styles.inputStyle}
-
             />
             <TextInput
               placeholder={"Quantidade de dias"}
@@ -52,7 +52,6 @@ const ModalInsert = ({ openModal, closeModal, saveData }) => {
                 setInputValue({ ...inputValue, qtdDias: text })
               }
               style={styles.inputStyle}
-
             />
             <TextInput
               placeholder={"Data"}
@@ -61,7 +60,6 @@ const ModalInsert = ({ openModal, closeModal, saveData }) => {
                 setInputValue({ ...inputValue, data: text })
               }
               style={styles.inputStyle}
-
             />
             <View style={styles.buttons}>
               <Pressable
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "#FFFFF0",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -106,17 +104,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  inputStyle:{
+  inputStyle: {
     padding: 10,
     margin: 5,
+    fontSize: 14,
     borderBottomWidth: 1,
-    borderColor: '#C0C0C0'
-
+    borderColor: "#C0C0C0",
   },
-  buttons:{
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  buttons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   button: {
     width: 100,
@@ -126,12 +124,12 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   buttonOpen: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#00008B",
   },
   buttonClose: {
     color: "#000000",
-    fontWeight: 'bold',
-    backgroundColor: "#D2691E" ,
+    fontWeight: "bold",
+    backgroundColor: "#B22222",
   },
   textStyle: {
     color: "white",
@@ -139,8 +137,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalText: {
-    marginBottom: 15,
     textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 25,
+    color: "#B22222",
+    margin: 10,
   },
 });
 

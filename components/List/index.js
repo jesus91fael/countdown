@@ -1,10 +1,4 @@
-import {
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
 import ModalInsert from "../Modal";
 
@@ -12,14 +6,14 @@ export default function List() {
   const [modalVisible, setModalVisible] = useState(false);
   let valorInicial = [
     {
-      id: "1",
+      id: 1,
       titulo: "Arroz",
       descricao: "Produto",
       data: "07/12/2022",
       qtdDias: "1",
     },
     {
-      id: "2",
+      id: 2,
       titulo: "Feijão",
       descricao: "Produto",
       data: "07/12/2022",
@@ -38,6 +32,14 @@ export default function List() {
     closeModal();
   };
 
+  let list = "";
+  const deleteEvent = (idProp) => {
+    var pos = listaEventos.indexOf(idProp);
+    //revisar
+    list = listaEventos.splice( pos - 1, 1 );
+    setListaEventos(list);
+  };
+  console.log("lista", listaEventos);
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Seus Eventos</Text>
@@ -59,7 +61,7 @@ export default function List() {
               <View style={styles.containerLineContent}>
                 <Text style={styles.containerLineLabel}>Descrição:</Text>
                 <Text>{item.descricao}</Text>
-              </View>              
+              </View>
               <View style={styles.containerLineContent}>
                 <Text style={styles.containerLineLabel}>Data do evento:</Text>
                 <Text>{item.data}</Text>
@@ -70,6 +72,14 @@ export default function List() {
                 </Text>
                 <Text>{item.qtdDias}</Text>
               </View>
+              <View style={styles.containerLineContent}>
+                <Pressable
+                  style={[styles.button, styles.buttonDelete]}
+                  onPress={() => deleteEvent(item.id)}
+                >
+                  <Text style={styles.textStyle}>Excluir</Text>
+                </Pressable>
+              </View>
             </View>
           )}
         />
@@ -78,6 +88,7 @@ export default function List() {
         openModal={modalVisible}
         closeModal={closeModal}
         saveData={saveData}
+        listaEventos={listaEventos.length}
       />
     </View>
   );
@@ -96,12 +107,12 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   containerLineContent: {
-    display:'flex',
-    flexDirection:'row',
-    alignItems: 'center'
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   boxLine: {
-    borderColor: '#A9A9A9',
+    borderColor: "#A9A9A9",
     borderLeftWidth: 1,
     marginTop: 40,
   },
@@ -128,9 +139,16 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   textStyle: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 16,
-    color: 'white'
+    color: "white",
+  },
+  buttonDelete: {
+    color: "#000000",
+    fontWeight: "bold",
+    marginLeft: 10,
+    backgroundColor: "#B22222",
+    borderRadius: 4,
   },
   buttonOpen: {
     backgroundColor: "#FA8072",
